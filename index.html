@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="My personal webpage.">
+    <meta name="author" content="Bence Sebők">
+
+    <title>Bence Sebők - personal webpage</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="vendor/devicons/css/devicons.min.css" rel="stylesheet">
+    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/resume.min.css" rel="stylesheet">
+
+    <script scr="js/octokit-rest.min.js"></script>
+
+    <script>
+        function httpGet(theUrl)
+        {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+            xmlHttp.send( null );
+            return xmlHttp.responseText;
+        }
+
+        function is_element(element, array)
+        {
+          for(var i = 0; i < array.length; i++)
+          {
+            if(element == array[i])
+            {
+              return true;
+            }
+          }
+          return false;
+        }
+
+        // table-responsive-md table-hover table-bordered
+        function listRepos()
+        {
+            var starred_repos = ["bambi_labor", "gekko_cli", "onlab", "pep", "linux_prog"];
+            var data;
+            data = httpGet('https://api.github.com/users/bence-sebok/repos');
+            var jsonData = JSON.parse(data);
+            // table of repos
+            var tableRepos = document.getElementById("tableRepos").childNodes[3];
+            for(var i = 0; i < jsonData.length; i++)
+            {
+              // tr element
+              var node_tr;
+              // is a repo starred?
+              if(is_element(jsonData[i].name, starred_repos))
+              {
+                // then make it primary
+                node_tr = document.createElement("tr");
+                node_tr.className = "table-primary";
+                console.log(node_tr);
+              }
+              else
+              {
+                // it is just a simple tr
+                node_tr = document.createElement("tr");
+              }
+              // td elements
+                // number
+                var node_th = document.createElement("th");
+                node_th.scope = "row";
+                var text_th = document.createTextNode(i+1);
+                node_th.appendChild(text_th);
+                node_tr.appendChild(node_th);
+                // name
+                var node_td = document.createElement("td");
+                var text_td = document.createTextNode(jsonData[i].name);
+                node_td.appendChild(text_td);
+                node_tr.appendChild(node_td);
+                // html url
+                node_td = document.createElement("td");
+                text_td = document.createTextNode(jsonData[i].html_url);
+                node_td.appendChild(text_td);
+                node_tr.appendChild(node_td);
+                // description
+                if(jsonData[i].description)
+                {
+                  node_td = document.createElement("td");
+                  text_td = document.createTextNode(jsonData[i].description);
+                  node_td.appendChild(text_td);
+                  node_tr.appendChild(node_td);
+                }
+                else
+                {
+                  node_td = document.createElement("td");
+                  text_td = document.createTextNode("");
+                  node_td.appendChild(text_td);
+                  node_tr.appendChild(node_td);
+                }
+                
+              // ad tr to tbody
+              tableRepos.appendChild(node_tr);
+            }
+        }
+    </script>
+
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Start Bootstrap</span>
+        <span class="d-none d-lg-block">
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="img/profile.jpg" alt="My profile picture">
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#education">Education</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#experience">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#skills">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#interests">Interests</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#github-repos">Projects on GitHub</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid p-0">
+
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
+        <div class="my-auto">
+          <h1 class="mb-0">Bence
+            <span class="text-primary">Sebők</span>
+          </h1>
+          <div class="subheading mb-5"><i>Address</i> Budapest (Hungary <img style = "margin-bottom: 5px; padding: 0px 3px;" src="img/HU.png" alt="Flag of Hungary">) · <i>Mobile phone number</i> ·
+            <a href="mailto:name@email.com"><i>name@email.com</i></a>
+          </div>
+          <p class="mb-5">I am studying Electrical Engineering (Bachelor's Degree) at Budapest University of Technology and Economics. I am really interested in projects related to Internet of Things (IoT) and embedded hardware and software.</p>
+          <ul class="list-inline list-social-icons mb-0">
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="experience">
+        <div class="my-auto">
+          <h2 class="mb-5">Experience</h2>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Junior technial trainee</h3>
+              <div class="subheading mb-3">Doctusoft Kft.</div>
+              <p>Description</p>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary">March 2013 - Present</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="education">
+        <div class="my-auto">
+          <h2 class="mb-5">Education</h2>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Budapest University of Technology and Economics</h3>
+              <div class="subheading mb-3">Bachelor of Science</div>
+              <div>Electrical Engineering - Embedded and control systems specialization (Department of Measurement and Information Systems)</div>            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary">August 2006 - May 2010</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
+        <div class="my-auto">
+          <h2 class="mb-5">Skills</h2>
+
+          <div class="subheading mb-3">Programming Languages &amp; Tools</div>
+          <ul class="list-inline list-icons">
+            <li class="list-inline-item">
+              <i class="devicons devicons-html5"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-css3"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-javascript"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-jquery"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-sass"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-less"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-bootstrap"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-wordpress"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-grunt"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-gulp"></i>
+            </li>
+            <li class="list-inline-item">
+              <i class="devicons devicons-npm"></i>
+            </li>
+          </ul>
+
+          <div class="subheading mb-3">Workflow</div>
+          <ul class="fa-ul mb-0">
+            <li>
+              <i class="fa-li fa fa-check"></i>
+              Mobile-First, Responsive Design</li>
+            <li>
+              <i class="fa-li fa fa-check"></i>
+              Cross Browser Testing &amp; Debugging</li>
+            <li>
+              <i class="fa-li fa fa-check"></i>
+              Cross Functional Teams</li>
+            <li>
+              <i class="fa-li fa fa-check"></i>
+              Agile Development &amp; Scrum</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="interests">
+        <div class="my-auto">
+          <h2 class="mb-5">Interests</h2>
+          <p>TODO</p>
+          <p class="mb-0"><i>TODO</i></p>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="github-repos">
+        <div class="my-auto">
+            <img src = "img/github-logo.png" class="img" style = "width: 50%;"><br></br>
+          <h2 class="mb-5">GitHub repositories</h2>
+          <p>Here are all my GitHub repositories. The <span class="text-primary"><b>blue-colored repositories</b></span> are my most important and exciting projects.</p>
+        <!-- Table of repositories -->
+        <table class="table table-responsive table-hover table-bordered" id = "tableRepos">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">GitHub link</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+          <script>
+          listRepos();
+          </script>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="credits">
+        <div class="my-auto">
+            <h2 class="mb-5">Credits</h2>
+            <ul>
+              <li><p>Flag Icons by <a href="/resources/flag-icons/">WhoIsHostingThis.com</a></p></li>
+            </ul>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/resume.min.js"></script>
+
+  </body>
+
+</html>
